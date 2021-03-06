@@ -1,4 +1,4 @@
-import { DeleteResult, getRepository, UpdateResult } from "typeorm";
+import { getRepository } from "typeorm";
 import { City } from "../models";
 
 export interface CityPayload {
@@ -8,7 +8,7 @@ export interface CityPayload {
 
 export const getCities = async (): Promise<Array<City>> => {
     const cityRepository = getRepository(City);
-    return cityRepository.find();
+    return cityRepository.find({ relations: ["forecasts"] });
 }
 
 export const createCity = async (payload: CityPayload): Promise<City> => {
@@ -22,7 +22,7 @@ export const createCity = async (payload: CityPayload): Promise<City> => {
 
 export const getCity = async (id: number): Promise<City | null> => {
     const cityRepository = getRepository(City);
-    const city = await cityRepository.findOne({ id: id });
+    const city = await cityRepository.findOne({ id: id }, { relations: ["forecasts"] });
     if (!city) return null;
     return city;
 }

@@ -5,10 +5,10 @@ import {
 } from "typeorm";
 import { City } from "./city";
 
-enum Forecasts {
-    "Sunny",
-    "Cloudy",
-    "Stormy"
+export enum Forecasts {
+    "Sunny" = "Sunny",
+    "Cloudy" = "Cloudy",
+    "Stormy" = "Stromy"
 }
 
 @Entity()
