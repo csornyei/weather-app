@@ -1,0 +1,43 @@
+version: '3.7'
+
+services:
+  main:
+    container_name: weather-app-main
+    build:
+      context: .
+      dockerfile: Dockerfile
+    volumes:
+      - ./src:/app/src
+    ports:
+      - ${SERVER_PORT}:${SERVER_PORT}
+    command: npm run dev
+    env_file:
+      - .env
+    networks:
+      - network
+    depends_on:
+      - redis
+      - postgres
+  redis:
+    container_name: weather-app-redis
+    image: redis:6
+    networks:
+      - network
+  postgres:
+    container_name: weather-app-postgres
+    image: postgres:13
+    networks:
+      - network
+    environment:
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_USER: ${DB_USERNAME}
+      POSTGRES_DB: ${DB_DATABASE_NAME}
+      PG_DATA: /var/lib/postgresql/data
+    ports:
+      - 5432:5432
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+networks:
+  network:
+volumes:
+  pgdata:
