@@ -1,6 +1,6 @@
 import {
     ForecastPayload,
-    getForecast,
+    getLatestForecast,
     getForecasts,
     createForecast,
     deleteLatestForecast
@@ -19,8 +19,8 @@ export default class ForecastController {
         return createForecast(body);
     }
 
-    public async getForecast(id: string): Promise<Forecast | null> {
-        return getForecast(Number(id));
+    public async getLatestForecast(): Promise<Forecast> {
+        return getLatestForecast();
     }
 
     public async deleteLatestForecast(cityId: string): Promise<Forecast | null> {

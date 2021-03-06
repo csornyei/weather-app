@@ -23,10 +23,14 @@ export const createForecast = async (payload: ForecastPayload): Promise<Forecast
     });
 }
 
-export const getForecast = async (id: number): Promise<Forecast | null> => {
+export const getLatestForecast = async (): Promise<Forecast> => {
     const forecastRepository = getRepository(Forecast);
-    const forecast = await forecastRepository.findOne({ id: id });
-    if (!forecast) return null;
+    const forecast = await forecastRepository
+        .createQueryBuilder("forecast")
+        .orderBy("forecast.id", "DESC")
+        .limit(1)
+        .leftJoinAndSelect("forecast.city", "city")
+        .getOne();
     return forecast;
 }
 

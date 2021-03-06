@@ -8,7 +8,12 @@ export interface CityPayload {
 
 export const getCities = async (): Promise<Array<City>> => {
     const cityRepository = getRepository(City);
-    return cityRepository.find({ relations: ["forecasts"] });
+    return await cityRepository
+        .createQueryBuilder("City")
+        .leftJoinAndSelect("City.forecasts", "forecasts")
+        .leftJoin("City.forecasts", "next_forecasts", "forecasts.id < next_forecasts.id")
+        .where("next_forecasts.id IS NULL")
+        .getMany();
 }
 
 export const createCity = async (payload: CityPayload): Promise<City> => {
