@@ -72,3 +72,14 @@ export const unlockCity = async (id: number): Promise<City | ErrorResponse> => {
         lockedSince: null
     });
 }
+
+export const lockedCities = async (): Promise<Array<City>> => {
+    const cityRepository = getRepository(City);
+    const cities = await cityRepository
+        .createQueryBuilder("City")
+        .select()
+        .where("City.lockedSince IS NOT NULL")
+        .getMany();
+
+    return cities;
+}

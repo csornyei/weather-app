@@ -17,6 +17,12 @@ router.post("/", async (req, res) => {
     return res.send(response);
 });
 
+router.get("/locked", async (_req, res) => {
+    const controller = new CityController();
+    const response = await controller.lockedCities();
+    return res.send(response);
+})
+
 router.get("/:id", async (req, res) => {
     const controller = new CityController();
     const response = await controller.getCity(req.params.id);

@@ -5,7 +5,8 @@ import {
     updateCity,
     deleteCity,
     lockCity,
-    unlockCity
+    unlockCity,
+    lockedCities
 } from "../repositories/city";
 import { City } from "../models";
 import { CityPayload, ErrorResponse } from "../types";
@@ -37,5 +38,9 @@ export default class CityController {
 
     public async unlockCity(id: string): Promise<City | ErrorResponse> {
         return unlockCity(Number(id));
+    }
+
+    public async lockedCities(): Promise<Array<City>> {
+        return lockedCities();
     }
 }
