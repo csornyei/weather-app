@@ -3,13 +3,9 @@ import {
     CreateDateColumn,
     Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn, UpdateDateColumn
 } from "typeorm";
+import { Forecasts } from "../types";
 import { City } from "./city";
 
-export enum Forecasts {
-    "Sunny" = "Sunny",
-    "Cloudy" = "Cloudy",
-    "Stormy" = "Stromy"
-}
 
 @Entity()
 export class Forecast {

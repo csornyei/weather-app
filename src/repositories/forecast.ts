@@ -1,13 +1,7 @@
 import { getRepository } from "typeorm";
 import { Forecast } from "../models";
-import { Forecasts } from "../models/forecast";
+import { ErrorResponse, ForecastPayload } from "../types";
 
-export interface ForecastPayload {
-    from: Date,
-    to: Date,
-    forecast: Forecasts,
-    cityId: number
-}
 
 export const getForecasts = async (): Promise<Array<Forecast>> => {
     const forecastRepository = getRepository(Forecast);
@@ -34,7 +28,7 @@ export const getLatestForecast = async (): Promise<Forecast> => {
     return forecast;
 }
 
-export const deleteLatestForecast = async (cityId: number): Promise<Forecast | null> => {
+export const deleteLatestForecast = async (cityId: number): Promise<Forecast | ErrorResponse> => {
     const forecastRepository = getRepository(Forecast);
     const forecast = await forecastRepository
         .createQueryBuilder("forecast")
@@ -42,7 +36,7 @@ export const deleteLatestForecast = async (cityId: number): Promise<Forecast | n
         .orderBy("forecast.id", "DESC")
         .limit(1)
         .getOne();
-    if (!forecast) return null;
+    if (!forecast) return { code: 404, message: "Forecast not found" };
     forecastRepository.delete({ id: forecast.id });
     return forecast;
 }
