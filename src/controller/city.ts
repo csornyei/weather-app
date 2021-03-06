@@ -1,12 +1,14 @@
 import {
-    CityPayload,
     getCity,
     getCities,
     createCity,
     updateCity,
-    deleteCity
+    deleteCity,
+    lockCity,
+    unlockCity
 } from "../repositories/city";
 import { City } from "../models";
+import { CityPayload, ErrorResponse } from "../types";
 
 export default class CityController {
     public async getCities(): Promise<Array<City>> {
@@ -17,15 +19,23 @@ export default class CityController {
         return createCity(body);
     }
 
-    public async getCity(id: string): Promise<City | null> {
+    public async getCity(id: string): Promise<City | ErrorResponse> {
         return getCity(Number(id));
     }
 
-    public async updateCity(id: string, body: CityPayload): Promise<any> {
+    public async updateCity(id: string, body: CityPayload): Promise<City | ErrorResponse> {
         return updateCity(Number(id), body);
     }
 
-    public async deleteCity(id: string): Promise<any> {
+    public async deleteCity(id: string): Promise<City | ErrorResponse> {
         return deleteCity(Number(id));
+    }
+
+    public async lockCity(id: string): Promise<City | ErrorResponse> {
+        return lockCity(Number(id));
+    }
+
+    public async unlockCity(id: string): Promise<City | ErrorResponse> {
+        return unlockCity(Number(id));
     }
 }

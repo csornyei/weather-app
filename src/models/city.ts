@@ -19,6 +19,12 @@ export class City {
     @Column()
     timezone: string;
 
+    @Column({
+        nullable: true,
+        default: null
+    })
+    lockedSince: Date;
+
     @OneToMany((_type) => Forecast, (forecast: Forecast) => forecast.city)
     forecasts!: Array<Forecast>;
 
