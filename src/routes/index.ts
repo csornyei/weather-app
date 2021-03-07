@@ -7,4 +7,7 @@ const router = express.Router();
 router.use("/api/city", CityRoutes);
 router.use("/api/forecast", ForecastRouter);
 
+router.get("/", (_req, res) => {
+    res.render("index");
+});
 export default router;

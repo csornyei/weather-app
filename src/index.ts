@@ -12,6 +12,9 @@ const PORT = process.env.SERVER_PORT || 3000;
 const app: Application = express();
 app.use(express.json());
 app.use(morgan("tiny"));
+app.set('view engine', 'ejs');
+app.set("views", "src/views");
+app.use("/public", express.static("src/public"));
 app.use(Routes);
 
 app.get("/", (req, res) => {

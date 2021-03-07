@@ -1,0 +1,49 @@
+<%- include("./partials/head");  %>
+<body>
+  <header>
+    <nav class="navbar navbar-dark bg-dark">
+      <div class="container-fluid">
+        <span class="navbar-brand mb-0 h1">Weather</span>
+      </div>
+    </nav>
+  </header>
+  <main>
+    <section>
+      <h1>Current cities</h1>
+      <div class="container">
+        <di class="row">
+          <table class="table table-dark table-hover">
+            <thead>
+              <tr>
+                <th scope="col">ID</th>
+                <th scope="col">City</th>
+                <th scope="col">Timezone</th>
+                <th scope="col">Forecast</th>
+                <th scope="col">Controlls</th>
+              </tr>
+            </thead>
+            <tbody id="cities"></tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+    <section class="hidden" id="forecast-section">
+      <h2>Forecasts</h2>
+      <table class="table table-dark table-hover">
+        <thead>
+          <tr>
+            <th scope="col">ID</th>
+            <th scope="col">City ID</th>
+            <th scope="col">Forecast</th>
+            <th scope="col">From</th>
+            <th scope="col">To</th>
+          </tr>
+        </thead>
+        <tbody id="forecasts"></tbody>
+      </table>
+    </section>
+  </main>
+</body>
+<script src="/socket.io/socket.io.js"></script>
+<script src="public/script.js"></script>
+</html>
