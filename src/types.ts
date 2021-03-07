@@ -4,6 +4,17 @@ export enum Forecasts {
     "Stormy" = "Stromy"
 }
 
+export interface SuccessSubscriptionResult {
+    result: "success",
+    type: "subscribe" | "unsubscibe",
+    currentSubscriptions: Array<number>,
+    cityId: number
+}
+
+export interface FailedSubscriptionResult {
+    result: "failed",
+    reason: string
+}
 export interface CityPayload {
     name: string;
     timezone: string;

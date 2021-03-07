@@ -3,8 +3,10 @@ import CityController from "../controller/city";
 import ForecastController from "../controller/forecast";
 import { instanceOfErrorResponse } from "../types";
 import { setCache, getCache, clearCache } from "../redis";
+import { createClient } from "redis";
 
 const router = express.Router();
+const publisher = createClient(6379, "redis");
 
 router.get("/", async (_req, res) => {
     let data = await getCache("all");
@@ -105,6 +107,7 @@ router.post("/:id/forecast", async (req, res) => {
     if (instanceOfErrorResponse(response)) {
         return res.status(response.code).send({ message: response.message });
     }
+    publisher.publish("forecast", JSON.stringify(response));
     await clearCache("all");
     await clearCache(id);
     await clearCache("forecast");
