@@ -103,7 +103,7 @@ router.delete("/:id", async (req, res) => {
 router.post("/:id/forecast", async (req, res) => {
     const id = req.params.id
     const controller = new ForecastController();
-    const response = await controller.createForecast({ cityId: id, ...req.body });
+    const response = await controller.createForecast(Number(id), req.body);
     if (instanceOfErrorResponse(response)) {
         return res.status(response.code).send({ message: response.message });
     }

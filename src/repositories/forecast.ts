@@ -2,12 +2,6 @@ import { getRepository } from "typeorm";
 import { Forecast } from "../models";
 import { ErrorResponse, ForecastPayload } from "../types";
 
-
-export const getForecasts = async (): Promise<Array<Forecast>> => {
-    const forecastRepository = getRepository(Forecast);
-    return await forecastRepository.find();
-}
-
 export const createForecast = async (payload: ForecastPayload): Promise<Forecast> => {
     const forecastRepository = getRepository(Forecast);
     const forecast = new Forecast();

@@ -1,6 +1,7 @@
 import 'reflect-metadata';
 import { createConnection } from 'typeorm';
 import express, { Application } from 'express';
+import swaggerUi from "swagger-ui-express";
 import morgan from 'morgan';
 import dotenv from 'dotenv';
 import Routes from './routes/index';
@@ -22,6 +23,13 @@ app.set('view engine', 'ejs');
 app.set("views", "src/views");
 app.use("/public", express.static("src/public"));
 app.use(Routes);
+
+app.use("/docs",
+    swaggerUi.serve,
+    swaggerUi.setup(undefined, {
+        swaggerUrl: "/public/swagger.json",
+    })
+);
 
 createConnection(dbConfig)
     .then((_connection) => {
